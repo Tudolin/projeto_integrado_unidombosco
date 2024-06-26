@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Cadastro de Paciente{% endblock %}
+
+{% block content %}
+    <h1>Cadastro de Paciente</h1>
+    <form method="POST" action="{{ url_for('cadastro_paciente') }}">
+        <div class="form-group">
+            <label for="paciente">Nome do Paciente</label>
+            <input type="text" class="form-control" id="paciente" name="paciente" required>
+        </div>
+        <div class="form-group">
+            <label for="data_vacinacao">Data de Vacinação</label>
+            <input type="date" class="form-control" id="data_vacinacao" name="data_vacinacao" required>
+        </div>
+        <div class="form-group">
+            <label for="vacina">Vacina</label>
+            <input type="text" class="form-control" id="vacina" name="vacina" required>
+        </div>
+        <div class="form-group">
+            <label for="unidade">Unidade</label>
+            <input type="text" class="form-control" id="unidade" name="unidade" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+{% endblock %}

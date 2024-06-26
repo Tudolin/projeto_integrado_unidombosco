@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Cadastro de Vacinas{% endblock %}
+{% block content %}
+    <h1>Cadastro de Vacinas</h1>
+    <form method="POST">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required><br>
+        <label for="fabricante">Fabricante:</label>
+        <input type="text" id="fabricante" name="fabricante"><br>
+        <label for="lote">Lote:</label>
+        <input type="text" id="lote" name="lote"><br>
+        <label for="validade">Validade:</label>
+        <input type="date" id="validade" name="validade"><br>
+        <label for="requisitos">Requisitos de Armazenamento:</label>
+        <textarea id="requisitos" name="requisitos"></textarea><br>
+        <button type="submit">Cadastrar Vacina</button>
+    </form>
+    <a href="{{ url_for('index') }}">Voltar</a>
+{% endblock  %}

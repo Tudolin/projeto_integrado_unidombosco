@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Sistema de Vacinação{% endblock %}
+
+{% block content %}
+    <h1>Sistema de Vacinação</h1>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('cadastro_vacina') }}">Cadastro de Vacinas</a></li>
+            <li><a href="{{ url_for('cadastro_unidade') }}">Cadastro de Unidades de Saúde</a></li>
+            <li><a href="{{ url_for('cadastro_paciente') }}">Cadastro de Pacientes</a></li>
+            <li><a href="{{ url_for('agendamento') }}">Agendamento de Vacinação</a></li>
+            <li><a href="{{ url_for('registros') }}">Registros de Vacinação</a></li>
+            <li><a href="{{ url_for('relatorios') }}">Relatórios</a></li>
+        </ul>
+    </nav>
+{% endblock %}

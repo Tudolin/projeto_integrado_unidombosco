@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Relatórios{% endblock %}
+
+{% block content %}
+    <h1>Relatórios</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Relatório de Vacinação por Unidade</h3>
+            <canvas id="vacinasPorUnidade"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h3>Relatório de Vacinação por Idade</h3>
+            <canvas id="vacinasPorIdade"></canvas>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h3>Detalhes de Vacinação</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Paciente</th>
+                        <th>Data de Vacinação</th>
+                        <th>Vacina</th>
+                        <th>Unidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for registro in registros %}
+                    <tr>
+                        <td>{{ registro.paciente }}</td>
+                        <td>{{ registro.data_vacinacao }}</td>
+                        <td>{{ registro.vacina }}</td>
+                        <td>{{ registro.unidade }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Dados para o gráfico de Vacinas por Unidade
+        var ctx1 = document.getElementById('vacinasPorUnidade').getContext('2d');
+        var vacinasPorUnidade = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Unidade A', 'Unidade B', 'Unidade C'],
+                datasets: [{
+                    label: 'Número de Vacinas',
+                    data: [120, 90, 150],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Dados para o gráfico de Vacinas por Idade
+        var ctx2 = document.getElementById('vacinasPorIdade').getContext('2d');
+        var vacinasPorIdade = new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: ['0-18', '19-35', '36-50', '51+'],
+                datasets: [{
+                    label: 'Número de Vacinas',
+                    data: [50, 100, 75, 25],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            }
+        });
+    </script>
+{% endblock %}

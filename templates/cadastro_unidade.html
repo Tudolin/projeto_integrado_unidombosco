@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+<html>
+{% block title %}Cadastro de Unidades de Saúde{% endblock %}
+
+{% block content %}
+    <h1>Cadastro de Unidades de Saúde</h1>
+    <form method="POST">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required><br>
+        <label for="endereco">Endereço:</label>
+        <input type="text" id="endereco" name="endereco"><br>
+        <label for="telefone">Telefone:</label>
+        <input type="text" id="telefone" name="telefone"><br>
+        <button type="submit">Cadastrar Unidade</button>
+    </form>
+    <a href="{{ url_for('index') }}">Voltar</a>
+{% endblock %}
