@@ -7,19 +7,19 @@
         <label for="paciente_id">Paciente:</label>
         <select id="paciente_id" name="paciente_id" required>
             {% for paciente in pacientes %}
-            <option value="{{ paciente[0] }}">{{ paciente[1] }}</option>
+            <option value="{{ paciente.id }}">{{ paciente.paciente }}</option>
             {% endfor %}
         </select><br>
         <label for="vacina_id">Vacina:</label>
         <select id="vacina_id" name="vacina_id" required>
             {% for vacina in vacinas %}
-            <option value="{{ vacina[0] }}">{{ vacina[1] }}</option>
+            <option value="{{ vacina.id }}">{{ vacina.nome }}</option>
             {% endfor %}
         </select><br>
         <label for="unidade_saude_id">Unidade de Saúde:</label>
         <select id="unidade_saude_id" name="unidade_saude_id" required>
             {% for unidade in unidades %}
-            <option value="{{ unidade[0] }}">{{ unidade[1] }}</option>
+            <option value="{{ unidade.id }}">{{ unidade.nome }}</option>
             {% endfor %}
         </select><br>
         <label for="data">Data:</label>

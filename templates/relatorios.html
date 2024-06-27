@@ -31,10 +31,10 @@
                 <tbody>
                     {% for registro in registros %}
                     <tr>
-                        <td>{{ registro.paciente }}</td>
-                        <td>{{ registro.data_vacinacao }}</td>
-                        <td>{{ registro.vacina }}</td>
-                        <td>{{ registro.unidade }}</td>
+                        <td>{{ registro.RegistroPaciente.paciente }}</td>
+                        <td>{{ registro.Agendamento.data }}</td>
+                        <td>{{ registro.Vacina.nome }}</td>
+                        <td>{{ registro.UnidadeSaude.nome }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -49,10 +49,10 @@
         var vacinasPorUnidade = new Chart(ctx1, {
             type: 'bar',
             data: {
-                labels: ['Unidade A', 'Unidade B', 'Unidade C'],
+                labels: {{ unidades | tojson }},
                 datasets: [{
                     label: 'Número de Vacinas',
-                    data: [120, 90, 150],
+                    data: {{ vacinas_por_unidade | tojson }},
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1
@@ -75,7 +75,7 @@
                 labels: ['0-18', '19-35', '36-50', '51+'],
                 datasets: [{
                     label: 'Número de Vacinas',
-                    data: [50, 100, 75, 25],
+                    data: {{ vacinas_por_idade | tojson }},
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',

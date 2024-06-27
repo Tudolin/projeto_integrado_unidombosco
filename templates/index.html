@@ -3,15 +3,198 @@
 {% block title %}Sistema de Vacinação{% endblock %}
 
 {% block content %}
-    <h1>Sistema de Vacinação</h1>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('cadastro_vacina') }}">Cadastro de Vacinas</a></li>
-            <li><a href="{{ url_for('cadastro_unidade') }}">Cadastro de Unidades de Saúde</a></li>
-            <li><a href="{{ url_for('cadastro_paciente') }}">Cadastro de Pacientes</a></li>
-            <li><a href="{{ url_for('agendamento') }}">Agendamento de Vacinação</a></li>
-            <li><a href="{{ url_for('registros') }}">Registros de Vacinação</a></li>
-            <li><a href="{{ url_for('relatorios') }}">Relatórios</a></li>
-        </ul>
-    </nav>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Index</title>
+<style>
+    .bloco-chatbot {
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        margin-top: 50px; /* Afastamento maior para baixo */
+        text-align: center; /* Centralização do conteúdo */
+    }
+    .chat-container {
+        width: 100%;
+        max-width: 400px; /* Reduzindo a largura do container para melhorar a apresentação */
+        margin: auto;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Adicionando sombra para destacar o chat */
+    }
+    .chat-message {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+    }
+    .chat-message.user {
+        justify-content: flex-end;
+    }
+    .chat-message.user .message {
+        background-color: #dcf8c6;
+    }
+    .chat-message.bot {
+        justify-content: flex-start;
+    }
+    .chat-message.bot .message {
+        background-color: #fff;
+    }
+    .message {
+        padding: 10px 15px;
+        border-radius: 20px;
+        max-width: 80%;
+        word-wrap: break-word;
+        position: relative;
+    }
+    .message.user:before {
+        content: "";
+        position: absolute;
+        top: 10px;
+        right: -10px;
+        border-width: 10px;
+        border-style: solid;
+        border-color: transparent transparent transparent #dcf8c6;
+    }
+    .message.bot:before {
+        content: "";
+        position: absolute;
+        top: 10px;
+        left: -10px;
+        border-width: 10px;
+        border-style: solid;
+        border-color: transparent #fff transparent transparent;
+    }
+    .bot-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    .typing-indicator {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+    }
+    .typing-indicator .dot {
+        width: 8px;
+        height: 8px;
+        background-color: #999;
+        border-radius: 50%;
+        margin: 0 2px;
+        animation: blink 6s infinite both;
+    }
+    .typing-indicator .dot:nth-child(1) {
+        animation-delay: 0.2s;
+    }
+    .typing-indicator .dot:nth-child(2) {
+        animation-delay: 0.4s;
+    }
+    .typing-indicator .dot:nth-child(3) {
+        animation-delay: 0.6s;
+    }
+    @keyframes blink {
+        0%, 100% {
+            opacity: 0.2;
+        }
+        20% {
+            opacity: 1;
+        }
+    }
+    .suggestions {
+        margin-top: 20px;
+    }
+    .suggestion {
+        display: inline-block;
+        margin-right: 10px;
+        cursor: pointer;
+        color: #007bff;
+    }
+    .suggestion:hover {
+        text-decoration: underline;
+    }
+</style>
+<script>
+    async function sendMessage() {
+        const userMessage = document.getElementById('userMessage').value;
+        if (!userMessage.trim()) return;
+
+        addMessage(userMessage, 'user');
+
+        // Show typing indicator
+        showTypingIndicator();
+
+        const response = await fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: userMessage })
+        });
+
+        const data = await response.json();
+
+        // Remove typing indicator and show the bot's response
+        hideTypingIndicator();
+        addMessage(data.response, 'bot');
+    }
+
+    function addMessage(message, sender) {
+        const chatContainer = document.getElementById('chatContainer');
+        const messageElement = document.createElement('div');
+        messageElement.className = `chat-message ${sender}`;
+        messageElement.innerHTML = `
+            ${sender === 'bot' ? '<img src="/static/robo.png" class="bot-avatar" alt="Bot">' : ''}
+            <div class="message ${sender}">${message}</div>
+        `;
+        chatContainer.appendChild(messageElement);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+        const chatContainer = document.getElementById('chatContainer');
+        const typingIndicator = document.createElement('div');
+        typingIndicator.className = 'typing-indicator';
+        typingIndicator.id = 'typingIndicator';
+        typingIndicator.innerHTML = `
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        `;
+        chatContainer.appendChild(typingIndicator);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function hideTypingIndicator() {
+        const typingIndicator = document.getElementById('typingIndicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+
+    function suggestQuestion(question) {
+        document.getElementById('userMessage').value = question;
+    }
+</script>
+<h1>Sistema de Vacinação - Projeto Integrado Unidombosco</h1>
+<h3>Rafael Nadalin - Matrícula : 22203176</h3>
+<div class="bloco-chatbot">
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-message bot">
+            <img src="/static/robo.png" class="bot-avatar" alt="Bot">
+            <div class="message bot">Olá! Como posso ajudar você hoje?</div>
+        </div>
+    </div>
+    <div>
+        <input type="text" id="userMessage" placeholder="Digite sua mensagem">
+        <button onclick="sendMessage()">Enviar</button>
+    </div>
+    <div class="suggestions">
+        <span class="suggestion" onclick="suggestQuestion('quais são os horários de atendimento?')">Quais são os horários de atendimento?</span>
+        <span class="suggestion" onclick="suggestQuestion('qual é o endereço?')">Qual é o endereço?</span>
+        <span class="suggestion" onclick="suggestQuestion('quais vacinas estão disponíveis?')">Quais vacinas estão disponíveis?</span>
+        <span class="suggestion" onclick="suggestQuestion('como o sistema funciona?')">Como o sistema funciona?</span>
+        <span class="suggestion" onclick="suggestQuestion('quem foi o desenvolvedor?')">Quem foi o desenvolvedor?</span>
+    </div>
+</div>
 {% endblock %}

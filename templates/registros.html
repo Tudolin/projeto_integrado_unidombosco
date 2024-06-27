@@ -4,24 +4,28 @@
 {% block content %}
     <h1>Registros de Vacinação</h1>
     <table>
-        <tr>
-            <th>ID</th>
-            <th>Paciente</th>
-            <th>Vacina</th>
-            <th>Unidade de Saúde</th>
-            <th>Data</th>
-            <th>Hora</th>
-        </tr>
-        {% for agendamento in agendamentos %}
-        <tr>
-            <td>{{ agendamento[0] }}</td>
-            <td>{{ agendamento[1] }}</td>
-            <td>{{ agendamento[2] }}</td>
-            <td>{{ agendamento[3] }}</td>
-            <td>{{ agendamento[4] }}</td>
-            <td>{{ agendamento[5] }}</td>
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Paciente</th>
+                <th>Vacina</th>
+                <th>Unidade de Saúde</th>
+                <th>Data</th>
+                <th>Hora</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for agendamento in agendamentos %}
+            <tr>
+                <td>{{ agendamento[0] }}</td>
+                <td>{{ agendamento[1] }}</td>
+                <td>{{ agendamento[2] }}</td>
+                <td>{{ agendamento[3] }}</td>
+                <td>{{ agendamento[4] }}</td>
+                <td>{{ agendamento[5] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
     <a href="{{ url_for('index') }}">Voltar</a>
-{% endblock  %}
+{% endblock %}
