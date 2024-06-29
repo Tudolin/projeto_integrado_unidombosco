@@ -1,5 +1,8 @@
 # chatbot.py
 
+from fuzzywuzzy import process
+
+
 class Chatbot:
     def __init__(self):
         self.responses = {
@@ -27,10 +30,15 @@ class Chatbot:
             "como o sistema funciona?": "O sistema foi desenvolvido para cadastro de vacinas, pacientes e hospitais. A ideia é poder unificar todas as informações, realizar o agendamento de vacinação e conseguir extrair relatórios.",
             "quem foi o desenvolvedor?": "Meu desenvolvedor foi o aluno Rafael Nadalin, GitHub: https://github.com/Tudolin, linkedin: https://www.linkedin.com/in/rafael-nadalin-68166722a, Portifólio: https://tudolin.github.io/",
             "Link do projeto?": "Aqui está o link do projeto no Github: https://github.com/Tudolin/projeto_integrado_unidombosco",
-
+            "quais as funções que o sistema poderá executar?": "O sistema foi modelado podendo executar cadastros de usuários, unidades de vacinação e vacinas. Podendo também realizar o agendamento e exibir os dados em tempo real.",
+            "quais funções que apresentam inteligência artificial?": "para o uso de inteligência artificial, desenvolvi esse chatbot, que consegue receber os inputs do usuário e responder as duvidas mais simples, onde antes precisaria de um funcionário respondendo algumas simples duvidas, agora podem ser respondidas de maneira automática, processar e pesquisar a resposta mais apropriada na base de dados desenvolvida",
         }
     
     def get_response(self, user_input):
-        return self.responses.get(user_input.lower(), "Desculpe, não entendi sua pergunta. Por favor, tente novamente.")
+        user_input = user_input.lower()
+        closest_match, confidence = process.extractOne(user_input, self.responses.keys())
+        if confidence > 60:
+            return self.responses[closest_match]
+        return "Desculpe, não entendi sua pergunta. Por favor, tente novamente."
 
 chatbot = Chatbot()
